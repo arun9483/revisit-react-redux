@@ -5,8 +5,9 @@ import {
   selectCount,
   increment,
   decrement,
-  addAmount,
-  addIfOdd,
+  incrementByAmount,
+  incrementIfOdd,
+  incrementAsync,
 } from './CounterSlice';
 
 import style from './Counter.module.css';
@@ -26,13 +27,19 @@ const Counter: React.FC<{}> = () => {
 
   const add = () => {
     if (inputRef.current?.value) {
-      dispatch(addAmount(parseInt(inputRef.current.value)));
+      dispatch(incrementByAmount(parseInt(inputRef.current.value)));
     }
   };
 
   const addAmountIfOdd = () => {
     if (inputRef.current?.value) {
-      dispatch(addIfOdd(parseInt(inputRef.current.value)));
+      dispatch(incrementIfOdd(parseInt(inputRef.current.value)));
+    }
+  };
+
+  const addAsync = () => {
+    if (inputRef.current?.value) {
+      dispatch(incrementAsync(parseInt(inputRef.current.value)));
     }
   };
 
@@ -47,7 +54,7 @@ const Counter: React.FC<{}> = () => {
       <div className={style['lower-container']}>
         <input ref={inputRef} />
         <button onClick={add}>Add Amount</button>
-        <button>Add Async</button>
+        <button onClick={addAsync}>Add Async</button>
         <button onClick={addAmountIfOdd}>Add If Odd</button>
       </div>
     </div>
