@@ -60,6 +60,7 @@ const counterSlice = createSlice({
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 export const counterReducer = counterSlice.reducer;
 export const selectCount = (state: RootState) => state.counter.value;
+export const selectStatus = (state: RootState) => state.counter.status;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

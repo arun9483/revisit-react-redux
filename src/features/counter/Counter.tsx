@@ -3,17 +3,19 @@ import React, { useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   selectCount,
+  selectStatus,
   increment,
   decrement,
   incrementByAmount,
   incrementIfOdd,
   incrementAsync,
-} from './CounterSlice';
+} from './counterSlice';
 
 import style from './Counter.module.css';
 const Counter: React.FC<{}> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const counter = useAppSelector(selectCount);
+  const status = useAppSelector(selectStatus);
 
   const dispatch = useAppDispatch();
 
@@ -38,9 +40,11 @@ const Counter: React.FC<{}> = () => {
   };
 
   const addAsync = () => {
-    if (inputRef.current?.value) {
-      dispatch(incrementAsync(parseInt(inputRef.current.value)));
-    }
+    dispatch(
+      incrementAsync(
+        parseInt(inputRef?.current?.value ? inputRef?.current?.value : '')
+      )
+    );
   };
 
   return (
@@ -55,6 +59,11 @@ const Counter: React.FC<{}> = () => {
         <input ref={inputRef} />
         <button onClick={add}>Add Amount</button>
         <button onClick={addAsync}>Add Async</button>
+        {status === 'failed' && (
+          <span>
+            Async add failed because enter amount is not multiple of 5
+          </span>
+        )}
         <button onClick={addAmountIfOdd}>Add If Odd</button>
       </div>
     </div>
